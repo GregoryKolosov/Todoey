@@ -11,10 +11,16 @@ import UIKit
 class TodoListViewController: UITableViewController {
     
     var itemArray = ["Find Mike", "Buy Eggos", "Destroy Demogorgon"]
+    
+    let defaults = UserDefaults.standard
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
+        if let items = defaults.array(forKey: "TodoListArray") as? [String] {
+            itemArray = items
+        }
         
     }
 
@@ -49,9 +55,14 @@ class TodoListViewController: UITableViewController {
         
         let alert = UIAlertController(title: "Add New Todoey Item", message: "", preferredStyle: .alert)
         
+        let actionCancel = UIAlertAction(title: "Cancel", style: .default) { (actionCancel) in
+            //Cancel!
+        }
+        
         let action = UIAlertAction(title: "Add Item", style: .default) { (action) in
             //what will happen once the user clicks the Add button on our UIAlert
             self.itemArray.append(textField.text!)
+            self.defaults.set(self.itemArray, forKey: "TodoListArray")
             self.tableView.reloadData()
         }
         
@@ -59,7 +70,8 @@ class TodoListViewController: UITableViewController {
             alertTextField.placeholder = "Create new task"
             textField = alertTextField
         }
-        
+       
+        alert.addAction(actionCancel)
         alert.addAction(action)
         present(alert, animated: true, completion: nil)
         
