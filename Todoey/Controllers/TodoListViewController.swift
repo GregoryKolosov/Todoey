@@ -23,9 +23,9 @@ class TodoListViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
         loadItems()
-        print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
+       
     }
 
     
