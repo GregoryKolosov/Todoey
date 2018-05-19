@@ -103,15 +103,29 @@ class CategoryViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         performSegue(withIdentifier: "goToItems", sender: self)
+        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
         let destinationVC = segue.destination as! TodoListViewController
         
         if let indexPath = tableView.indexPathForSelectedRow {
+            
             destinationVC.selectedCategory = categoryArray[indexPath.row]
         }
         
     }
     
+    
+    //DELETE
+//    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//
+//        context.delete(categoryArray[indexPath.row])
+//        categoryArray.remove(at: indexPath.row)
+//
+//        saveCategories()
+//
+//        tableView.deselectRow(at: indexPath, animated: true)
+//    }
 }
