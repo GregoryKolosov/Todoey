@@ -118,7 +118,7 @@ class CategoryViewController: UITableViewController {
     }
     
     
-    //DELETE
+    //DELETE Categories
 //    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 //
 //        context.delete(categoryArray[indexPath.row])
