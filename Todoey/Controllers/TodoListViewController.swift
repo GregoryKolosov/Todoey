@@ -19,11 +19,14 @@ class TodoListViewController: UITableViewController {
             loadItems()
         }
     }
+    
+    //Time
+    var timeDate: NSDate = NSDate()
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
-      
-       
+        
     }
 
     
@@ -92,6 +95,9 @@ class TodoListViewController: UITableViewController {
                     if textField.text != "" {
                         let newItem = Item()
                         newItem.title = textField.text!
+  
+                        newItem.dateCreated = Date()
+                        
                         currentCategory.items.append(newItem)
                     }
                 }
@@ -133,7 +139,9 @@ extension TodoListViewController: UISearchBarDelegate {
 
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         
-        todoItems = todoItems?.filter("title CONTAINS[cd] %@", searchBar.text!).sorted(byKeyPath: "title", ascending: true)
+        todoItems = todoItems?.filter("title CONTAINS[cd] %@", searchBar.text!).sorted(byKeyPath: "dateCreated", ascending: true)
+        
+        self.tableView.reloadData()
         
     }
 
