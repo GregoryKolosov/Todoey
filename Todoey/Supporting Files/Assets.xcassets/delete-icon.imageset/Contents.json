@@ -2,11 +2,11 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "icon_shigri_smolenskaya2.jpg",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
+      "filename" : "delete-icon.png",
       "scale" : "2x"
     },
     {

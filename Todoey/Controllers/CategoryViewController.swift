@@ -9,7 +9,8 @@
 import UIKit
 import RealmSwift
 
-class CategoryViewController: UITableViewController {
+
+class CategoryViewController: SwipeTableViewController {
     
     let realm = try! Realm()
 
@@ -18,6 +19,7 @@ class CategoryViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         loadCategories()
+        tableView.rowHeight = 80.0
     }
 
     //MARK: - TableView Datasourse Method
@@ -27,7 +29,7 @@ class CategoryViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "CategoryCell", for: indexPath)
+        let cell = super.tableView(tableView, cellForRowAt: indexPath)
         
         cell.textLabel?.text = categories?[indexPath.row].name ?? "No categories added yet"
 
@@ -56,6 +58,18 @@ class CategoryViewController: UITableViewController {
         self.tableView.reloadData()
    }
     
+    override func updateModel(at indexPath: IndexPath) {
+        if let categoryForDeletion = self.categories?[indexPath.row] {
+        
+            do {
+                try self.realm.write {
+                self.realm.delete(categoryForDeletion)
+                }
+            } catch {
+                print("Error deleting category \(error)")
+                    }
+            }
+    }
     
     //MARK: - Add new Categories
     @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
@@ -92,6 +106,8 @@ class CategoryViewController: UITableViewController {
         present(alert, animated: true, completion: nil)
     }
     
+
+    
    
     //MARK: - TableView Delegate Methods
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -122,4 +138,9 @@ class CategoryViewController: UITableViewController {
 //
 //        tableView.deselectRow(at: indexPath, animated: true)
 //    }
-}
+    
+} //END
+
+
+
+
