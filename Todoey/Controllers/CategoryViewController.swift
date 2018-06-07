@@ -28,17 +28,23 @@ class CategoryViewController: SwipeTableViewController {
         return categories?.count ?? 1
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        guard let originalColour = UIColor(hexString: "1D9BF6") else {fatalError()}
+        navigationController?.navigationBar.barTintColor = originalColour
+    }
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        
+
         let cell = super.tableView(tableView, cellForRowAt: indexPath)
-     
-        cell.textLabel?.text = categories?[indexPath.row].name ?? "No categories added yet"
         
-        cell.backgroundColor = UIColor(hexString: categories?[indexPath.row].colourC ?? UIColor.randomFlat.hexValue())
-        
+        if let category = categories?[indexPath.row] {
+            cell.textLabel?.text = category.name
+            guard let categoryColour = UIColor(hexString: category.colourC) else {fatalError()}
+            cell.backgroundColor = categoryColour
+            cell.textLabel?.textColor = ContrastColorOf(categoryColour, returnFlat: true)
+        }
+
         return cell
-        
     }
     
     //MARK: - Data Manipulation Methods
